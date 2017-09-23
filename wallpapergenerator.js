@@ -4,14 +4,17 @@ var Patternscreen=document.getElementById("patternscreen");
 var Dump=document.getElementById("codedump");
 var Base64=document.getElementById("base64dump");
 
+
 var RightSymetry=[];
 var LeftSymetry=[];
 var currentDot={x: 0, y: 0};
 var DotCount={left: 0, right: 0};
 var Code=0;
+var B64code=false;
 
 function initSVG(){
  var code='<polygon points="0,160 160,0 320,160 160,320" style="fill:none;stroke:black;"/>';
+ document.body.style.background="#eaeaea";
  Patternscreen.innerHTML=code;
  RightSymetry.length=0;
  LeftSymetry.length=0;
@@ -20,6 +23,7 @@ function initSVG(){
  Code=0;
  Dump.textContent="";
  Base64.innerHTML="";
+ B64code=false;
 }
 
 function salutation(){
@@ -42,7 +46,6 @@ function getCodeDump(x){
  return vvv;
 }
 
-document.body.style.background="#eaeaea";
 initSVG();
 //bg=getCodeDump("itall");
 //document.getElementById("codedump").innerHTML=bg;
@@ -116,7 +119,7 @@ function mirror(){ // mirrors dots from the left to the right side
 }
 
 function generate(){
- var luCo=[],rlCo=[];
+ var luCo=[],rlCo=[],mluCo=[],mrlCo=[];
  console.log("generate() exec.");
  LeftSymetry.sort();
  LeftSymetry.map(function(x){
@@ -125,21 +128,32 @@ function generate(){
                  var bx=cx+160, by=cy+160;
                  var s=cx+","+cy+" ";
                  var d=bx+","+by+" ";
+                 var ms=(cx/10)+","+(cy/10)+" ";
+                 var md=(bx/10)+","+(by/10)+" ";
                  //console.log(s);
                  luCo.push(s);
                  rlCo.push(d);
+                 mluCo.push(ms); 
+                 mrlCo.push(md);
  });
  var luCood=luCo.reduce(function(a,x){return a+x;});
  var rlCood=rlCo.reduce(function(a,x){return a+x;});
+ var mluCood=mluCo.reduce(function(a,x){return a+x;});
+ var mrlCood=mrlCo.reduce(function(a,x){return a+x;});
  var lub="0,160 ",lue="160,0 ";
+ var mlub="0,16.0 ",mlue="16.0,0 ";
  var rlb="160,320 ",rle="320,160 ";
- var lu="<polyline points='"+lub+luCood+lue+"' style='fill:none;stroke:green;'/>";
- var rl="<polyline points='"+rlb+rlCood+rle+"' style='fill:none;stroke:green;'/>";
+ var mrlb="16.0,32.0 ",mrle="32.0,16.0 ";
+ var g="<g style='fill:none;stroke:green;'>",gg="</g>";
+ var lu="<polyline points='"+lub+luCood+lue+"' />";
+ var rl="<polyline points='"+rlb+rlCood+rle+"' />";
+ var mlu="<polyline points='"+mlub+mluCood+mlue+"' />";
+ var mrl="<polyline points='"+mrlb+mrlCood+mrle+"' />";
  console.log("luCood "+luCood);
  console.log(lu);
  console.log(rl);
 
- var ruCo=[],llCo=[];
+ var ruCo=[],llCo=[],mruCo=[],mllCo=[];
  RightSymetry.sort();
  RightSymetry.map(function(x){
                   var cx=Math.round(x/1000); 
@@ -147,20 +161,30 @@ function generate(){
                   var bx=cx-160, by=cy+160;
                   var s=cx+","+cy+" ";
                   var d=bx+","+by+" "; 
+                  var ms=(cx/10)+","+(cy/10)+" ";
+                  var md=(bx/10)+","+(by/10)+" ";
                   ruCo.push(s);
                   llCo.push(d); 
+                  mruCo.push(ms);
+                  mllCo.push(md); 
  });
  var ruCood=ruCo.reduce(function(a,x){return a+x;});
  var llCood=llCo.reduce(function(a,x){return a+x;});
+ var mruCood=mruCo.reduce(function(a,x){return a+x;});
+ var mllCood=mllCo.reduce(function(a,x){return a+x;});
  var rub="160,0 ",rue="320,160 ",llb="0,160 ",lle="160,320 "; 
- var ru="<polyline points='"+rub+ruCood+rue+"' style='fill:none;stroke:green;'/>";
- var ll="<polyline points='"+llb+llCood+lle+"' style='fill:none;stroke:green;'/>";
+ var mrub="16.0,0 ",mrue="32.0,16.0 ",mllb="0,16.0 ",mlle="16.0,32.0 "; 
+ var ru="<polyline points='"+rub+ruCood+rue+"' />";
+ var mru="<polyline points='"+mrub+mruCood+mrue+"' />";
+ var ll="<polyline points='"+llb+llCood+lle+"' />";
+ var mll="<polyline points='"+mllb+mllCood+mlle+"' />";
  console.log(ru); 
  console.log(ll); 
- var svghead="<svg>",svgtail="</svg>";
- Code=svghead.split('')+lu.split('')+rl.split('')+ru.split('')+ll.split('')+svgtail.split('');
+ var svghead='<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" >'+g;
+ var svgtail=gg+"</svg>";
+ Code=svghead.split('')+mlu.split('')+mrl.split('')+mru.split('')+mll.split('')+svgtail.split('');
  console.log("Code: "+JSON.stringify(Code));
- Patternscreen.innerHTML=lu+rl+ru+ll;
+ Patternscreen.innerHTML=g+lu+rl+ru+ll+gg;
 }
 
 function dumpCode(){
@@ -197,11 +221,21 @@ function dumpBase64(){
   {alert("dump code first ! bonŝancon !");}
  else
   {b64=window.btoa(w);
+   B64code=b64;
    Base64.innerHTML="<textarea cols='71' rows='7'>"+b64+"</textarea>";}
 }
-//some trash
-//var cx="data:image/svg+xml;utf-8,<svg><polygon points='0,160 160,0 320,160 160,320'/></svg>";
-//var example="url('"+cx+"')";
-//document.body.style.background=example;
+
+function showBackground(){
+ console.log("showBackground executed");
+ if(B64code)
+  {var url='url("data:image/svg+xml;base64,';
+   var urltail='") repeat';
+   console.log(url+B64code+urltail);
+   document.body.style.background=url+B64code+urltail;
+   //document.body.style.backgroundSize = "32px 32px";
+  }
+ else
+  {alert("Be so kind and generate the base64 code first!");}
+}
 
 
