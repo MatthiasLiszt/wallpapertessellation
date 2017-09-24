@@ -13,6 +13,9 @@ var Code=0;
 var B64code=false;
 var Background=false;
 var BackgroundIncrease=false;
+var FillColor="grey";
+var Color=false;
+var BGColor=0;
 
 function initSVG(){
  var code='<polygon points="0,160 160,0 320,160 160,320" style="fill:none;stroke:black;"/>';
@@ -28,6 +31,9 @@ function initSVG(){
  B64code=false;
  Background=false;
  BackgroundIncrease=false;
+ FillColor="grey";
+ Color=false;
+ BGColor=0;
 }
 
 function salutation(){
@@ -149,6 +155,7 @@ function generate(){
  var rlb="160,320 ",rle="320,160 ";
  var mrlb="16.0,32.0 ",mrle="32.0,16.0 ";
  var g="<g style='fill:none;stroke:green;'>",gg="</g>";
+ var gc="<g style='fill:none;stroke:grey;'>"
  var lu="<polyline points='"+lub+luCood+lue+"' />";
  var rl="<polyline points='"+rlb+rlCood+rle+"' />";
  var mlu="<polyline points='"+mlub+mluCood+mlue+"' />";
@@ -186,7 +193,7 @@ function generate(){
  console.log(ll); 
  var xy=' width="32px" height="32px" ';
  var vbox=' viewBox="0 0 32 32" ';
- var svghead='<svg xmlns="http://www.w3.org/2000/svg"'+xy+vbox+'>'+g;
+ var svghead='<svg xmlns="http://www.w3.org/2000/svg"'+xy+vbox+'>'+gc;
  var svgtail=gg+"</svg>";
  Code=svghead.split('')+mlu.split('')+mrl.split('')+mru.split('')+mll.split('')+svgtail.split('');
  console.log("Code: "+JSON.stringify(Code));
@@ -246,7 +253,9 @@ function showBackground(){
 }
 
 function scaleBackground(){
+ 
  console.log("body clicked "+Background);
+
  if(Background)
   {var b;
    if(Background<32)
@@ -260,6 +269,114 @@ function scaleBackground(){
    document.body.style.backgroundSize=b+"px "+b+"px ";
    Background=b;
   }
+  
 }
 
+function setBackgroundColor(){
+ var palette=[];
 
+ palette.push("#eaeaea");
+ palette.push("#e0e0e0"); 
+ palette.push("#d0d0d0"); 
+ palette.push("#c0c0c0"); 
+ palette.push("#b0b0b0");
+ palette.push("#a0a0a0"); 
+
+ ++BGColor;
+ if(BGColor>5){BGColor=0;}
+ document.body.style.backgroundColor=palette[BGColor];
+}
+
+function generatePolygon(){
+ var luCo=[],rlCo=[],ruCo=[],llCo=[];
+ var mluCo=[],mrlCo=[],mruCo=[],mllCo=[];
+ var lub="0,160 ",lue="160,0 ";
+ var mlub="0,16.0 ",mlue="16.0,0 ";
+ var rlb="160,320 ",rle="320,160 ";
+ var mrlb="16.0,32.0 ",mrle="32.0,16.0 ";
+ var rub="160,0 ",rue="320,160 ",llb="0,160 ",lle="160,320 "; 
+ var mrub="16.0,0 ",mrue="32.0,16.0 ",mllb="0,16.0 ",mlle="16.0,32.0 "; 
+
+ console.log("generate filled polygon");
+ LeftSymetry.sort();
+ RightSymetry.sort();
+ luCo.push(lub);
+ rlCo.push(rlb);
+ mluCo.push(mlub);
+ mrlCo.push(mrlb);
+ LeftSymetry.map(function(x){
+                 var cx=Math.round(x/1000); 
+                 var cy=(x%1000);
+                 var bx=cx+160, by=cy+160;
+                 var s=cx+","+cy+" ";
+                 var d=bx+","+by+" ";
+                 var ms=(cx/10)+","+(cy/10)+" ";
+                 var md=(bx/10)+","+(by/10)+" ";
+                 luCo.push(s);
+                 rlCo.push(d);
+                 mluCo.push(ms); 
+                 mrlCo.push(md);
+ });
+ luCo.push(lue);
+ rlCo.push(rle);
+ mluCo.push(mlue);
+ mrlCo.push(mrle);
+ ruCo.push(rub);
+ llCo.push(llb);
+ mruCo.push(mrub);
+ mllCo.push(mllb);
+ RightSymetry.map(function(x){
+                  var cx=Math.round(x/1000); 
+                  var cy=(x%1000);
+                  var bx=cx-160, by=cy+160;
+                  var s=cx+","+cy+" ";
+                  var d=bx+","+by+" "; 
+                  var ms=(cx/10)+","+(cy/10)+" ";
+                  var md=(bx/10)+","+(by/10)+" ";
+                  ruCo.push(s);
+                  llCo.push(d); 
+                  mruCo.push(ms);
+                  mllCo.push(md); 
+ });
+ ruCo.push(rue);
+ llCo.push(lle);
+ mruCo.push(mrue);
+ mllCo.push(mlle);
+
+ var luCood=luCo.reduce(function(a,x){return a+x;});
+ var rlCood=rlCo.reduce(function(a,x){return a+x;});
+ var ruCood=ruCo.reduce(function(a,x){return a+x;});
+ var llCood=llCo.reduce(function(a,x){return a+x;});
+ var mluCood=mluCo.reduce(function(a,x){return a+x;});
+ var mrlCood=mrlCo.reduce(function(a,x){return a+x;});
+ var mruCood=mruCo.reduce(function(a,x){return a+x;});
+ var mllCood=mllCo.reduce(function(a,x){return a+x;});
+ var allCood=luCood+ruCood+llCood+rlCood;
+ var mallCood=mluCood+mruCood+mllCood+mrlCood;
+
+ var g="<g style='fill:orange;stroke:none;'>",gg="</g>";
+ var gc="<g style='fill:"+FillColor+";stroke:none;'>"
+ var xy=' width="32px" height="32px" ';
+ var vbox=' viewBox="0 0 32 32" ';
+ var svghead='<svg xmlns="http://www.w3.org/2000/svg"'+xy+vbox+'>'+gc;
+ var svgtail=gg+"</svg>";
+ var poly='<polygon points="'+allCood+'"/>';
+ var mpoly='<polygon points="'+mallCood+'"/>';
+
+ Code=svghead.split('')+mpoly.split('')+svgtail.split('');
+ console.log("Code: "+JSON.stringify(Code));
+ Patternscreen.innerHTML=g+poly+gg;
+}
+
+function generateCheck(){
+ console.log("generateCheck() executed");
+ if(Color)
+  {generatePolygon();}
+ else
+  {generate();}
+}
+
+function setColor(){
+ console.log("setColor() executed");
+ Color=true; 
+}
