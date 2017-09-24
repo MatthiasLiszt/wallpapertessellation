@@ -3,6 +3,9 @@
 var Patternscreen=document.getElementById("patternscreen");
 var Dump=document.getElementById("codedump");
 var Base64=document.getElementById("base64dump");
+var Colormenu=document.getElementById("colormenu");
+var Colorfield=document.getElementById("colorfield");
+var ColorButton=document.getElementById("color");
 
 
 var RightSymetry=[];
@@ -16,6 +19,7 @@ var BackgroundIncrease=false;
 var FillColor="grey";
 var Color=false;
 var BGColor=0;
+var FColor=0;
 
 function initSVG(){
  var code='<polygon points="0,160 160,0 320,160 160,320" style="fill:none;stroke:black;"/>';
@@ -34,6 +38,7 @@ function initSVG(){
  FillColor="grey";
  Color=false;
  BGColor=0;
+ FColor=0;
 }
 
 function salutation(){
@@ -378,5 +383,50 @@ function generateCheck(){
 
 function setColor(){
  console.log("setColor() executed");
- Color=true; 
+ if(Color)
+  {Colormenu.style.display="none";
+   Color=false;
+   ColorButton.textContent="color";
+  }
+ else
+  {Colormenu.style.display="inline";
+   Color=true; 
+   ColorButton.textContent="contour";
+  }
+}
+
+function removeColorMenu(){
+ Colormenu.style.display="none"; 
+}
+
+function setFillColor(){
+ var palette=[];
+
+ palette.push("grey");
+ palette.push("#d0cac0"); 
+ palette.push("#c0bab0"); 
+ palette.push("#c0d0c0"); 
+ palette.push("#b0c0b0");
+ palette.push("#c0c0d0"); 
+ palette.push("#b0b0c0"); 
+
+ ++FColor;
+ if(FColor>6){FColor=0;}
+ FillColor=palette[FColor];
+ Colorfield.style.backgroundColor=FillColor;
+}
+
+function pinkifyFillColor(){
+ var palette=[];
+
+ palette.push("deeppink");
+ palette.push("#FFC0CB"); 
+ palette.push("#fac0ca"); 
+ palette.push("#FFB6C1"); 
+ palette.push("#fab6c3");
+ palette.push("#FF69B4"); 
+ palette.push("#fa69b7"); 
+
+ FillColor=palette[FColor];
+ Colorfield.style.backgroundColor=FillColor;
 }
