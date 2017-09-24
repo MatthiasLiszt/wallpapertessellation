@@ -11,6 +11,8 @@ var currentDot={x: 0, y: 0};
 var DotCount={left: 0, right: 0};
 var Code=0;
 var B64code=false;
+var Background=false;
+var BackgroundIncrease=false;
 
 function initSVG(){
  var code='<polygon points="0,160 160,0 320,160 160,320" style="fill:none;stroke:black;"/>';
@@ -24,6 +26,8 @@ function initSVG(){
  Dump.textContent="";
  Base64.innerHTML="";
  B64code=false;
+ Background=false;
+ BackgroundIncrease=false;
 }
 
 function salutation(){
@@ -180,7 +184,9 @@ function generate(){
  var mll="<polyline points='"+mllb+mllCood+mlle+"' />";
  console.log(ru); 
  console.log(ll); 
- var svghead='<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" >'+g;
+ var xy=' width="32px" height="32px" ';
+ var vbox=' viewBox="0 0 32 32" ';
+ var svghead='<svg xmlns="http://www.w3.org/2000/svg"'+xy+vbox+'>'+g;
  var svgtail=gg+"</svg>";
  Code=svghead.split('')+mlu.split('')+mrl.split('')+mru.split('')+mll.split('')+svgtail.split('');
  console.log("Code: "+JSON.stringify(Code));
@@ -232,10 +238,28 @@ function showBackground(){
    var urltail='") repeat';
    console.log(url+B64code+urltail);
    document.body.style.background=url+B64code+urltail;
-   //document.body.style.backgroundSize = "32px 32px";
+   document.body.style.backgroundSize = "64px 64px";
+   Background=64;
   }
  else
   {alert("Be so kind and generate the base64 code first!");}
+}
+
+function scaleBackground(){
+ console.log("body clicked "+Background);
+ if(Background)
+  {var b;
+   if(Background<32)
+    {BackgroundIncrease=true;}
+   if(Background>96)
+    {BackgroundIncrease=false;}
+   if(BackgroundIncrease)
+    {b=Background*1.41}   
+   else
+    {b=Background/1.41}   
+   document.body.style.backgroundSize=b+"px "+b+"px ";
+   Background=b;
+  }
 }
 
 

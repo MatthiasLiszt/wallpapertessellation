@@ -4,7 +4,7 @@
 <title>wallpaper generator using wallpaper tessellation</title>
 <link rel="stylesheet" href="lunokhod.css"/>
 </head>
-<body>
+<body onclick="scaleBackground()">
 <div id="menuline">
 <button id="intro" onclick="salutation()">npuBem!</button>
 <button id="clear" onclick="initSVG()">clear</button>
@@ -15,7 +15,11 @@
 <button id="show" onclick="showBackground()">show</button>
 <button id="help">HELP</button>
 </div>
-<br></br><br></br>
+<br></br>
+<div id="colormenu" style="display:none">
+<button >rgb</button>
+</div>
+<br></br>
 
 <div id="itall" onmousedown="drawDot(event)" >
 <svg id="patternscreen" >
