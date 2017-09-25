@@ -15,7 +15,7 @@
 <button id="show" onclick="showBackground()">show</button>
 <button id="color" onclick="setColor()">color</button>
 <button id="background" onclick="setBackgroundColor()">background</button>
-<button id="help">HELP</button>
+<button id="help" onclick="showHelp()">HELP</button>
 </div>
 <br></br>
 <div id="colormenu" >
@@ -24,17 +24,34 @@
 <button id="pinkify" onclick="pinkifyFillColor()"> pinkify</button>
 <button class="floatbutton" onclick="removeColorMenu()">X</button>
 </div>
-<br></br>
+<div id="helptext">
+<h1>Getting Started</h1>
 
+<p>You probably see the square field with the turned square in it. </p>
+
+<p >You can click there with the mouse and in the upper left corner there should<br>
+appear a red dot. On the lower right corner there should appear a blue dot. </p>
+
+<p >Click the <ins><strong>mirror</strong></ins> button in the menu line and you should have <br>
+the whole thing mirrored or reflected with orange and green dots. </p>
+
+<p >Well done, I am sure you got it. Click on the "<strong>generate</strong>" button to 
+get the<br> tessellation tile. It is set to contours only by default. </p>
+
+<p >After that you can get the SVG-code by clicking on the <strong>code</strong> button or the base64 dump<br> by clicking on the <strong>base64</strong> button. </p>
+
+<p>Please find the rest out by yourself. I know you can do it , because you are awseome!</p>
+<marquee> This project is underfunded ! You could help by hiring me.</marquee>
+</div>
+<br></br>
 <div id="itall" onmousedown="drawDot(event)" >
 <svg id="patternscreen" >
 </svg>
 </div>
-<h3>codedump</h3>
+<h3 id="codedumpheadline">codedump</h3>
 <div id="codedump"></div>
-<h3>base64</h3>
+<h3 id="base64headline">base64</h3>
 <div id="base64dump"></div>
-
 <script type="text/javascript" src="wallpapergenerator.js"></script>
 </body>
 </html>

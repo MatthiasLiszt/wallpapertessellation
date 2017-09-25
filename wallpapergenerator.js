@@ -6,7 +6,13 @@ var Base64=document.getElementById("base64dump");
 var Colormenu=document.getElementById("colormenu");
 var Colorfield=document.getElementById("colorfield");
 var ColorButton=document.getElementById("color");
-
+var Codedumpheadline=document.getElementById("codedumpheadline");
+var Base64headline=document.getElementById("base64headline");
+var Itall=document.getElementById("itall");
+var HelpButton=document.getElementById("help");
+var Helptext=document.getElementById("helptext");
+//var BegMarquee=document.getElementById("beg");
+//var BegActive=false;
 
 var RightSymetry=[];
 var LeftSymetry=[];
@@ -20,6 +26,7 @@ var FillColor="grey";
 var Color=false;
 var BGColor=0;
 var FColor=0;
+var HELP=false;
 
 function initSVG(){
  var code='<polygon points="0,160 160,0 320,160 160,320" style="fill:none;stroke:black;"/>';
@@ -39,6 +46,9 @@ function initSVG(){
  Color=false;
  BGColor=0;
  FColor=0;
+ Codedumpheadline.style.display="none";
+ Base64headline.style.display="none";
+ HELP=false;
 }
 
 function salutation(){
@@ -220,7 +230,8 @@ function dumpCode(){
  if(Code === 0)
   {alert("try to generate the tile first by clicking on =generate=");}
  else
-  {Dump.textContent=w;}
+  {Codedumpheadline.style.display="inline";
+   Dump.textContent=w;}
 }
 
 function dumpBase64(){
@@ -240,6 +251,7 @@ function dumpBase64(){
  else
   {b64=window.btoa(w);
    B64code=b64;
+   Base64headline.style.display="inline";
    Base64.innerHTML="<textarea cols='71' rows='7'>"+b64+"</textarea>";}
 }
 
@@ -429,4 +441,20 @@ function pinkifyFillColor(){
 
  FillColor=palette[FColor];
  Colorfield.style.backgroundColor=FillColor;
+}
+
+function showHelp(){
+ if(!HELP)
+  {Itall.style.display="none";
+   HelpButton.textContent="back to programm";
+   Helptext.style.display="inline";
+   //Helptext.style.innerHTML= loadUrl('help.html');
+   HELP=true;
+  }
+ else
+  {Itall.style.display="inline";
+   HelpButton.textContent="HELP";
+   Helptext.style.display="none";
+   HELP=false;
+  } 
 }
