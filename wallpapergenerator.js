@@ -146,7 +146,7 @@ function mirror(){ // mirrors dots from the left to the right side
 function generate(){
  var luCo=[],rlCo=[],mluCo=[],mrlCo=[];
  console.log("generate() exec.");
- LeftSymetry.sort();
+ LeftSymetry.sort(function(a,b){return a-b;});
  LeftSymetry.map(function(x){
                  var cx=Math.round(x/1000); 
                  var cy=(x%1000);
@@ -180,7 +180,7 @@ function generate(){
  console.log(rl);
 
  var ruCo=[],llCo=[],mruCo=[],mllCo=[];
- RightSymetry.sort();
+ RightSymetry.sort(function(a,b){return a-b;});
  RightSymetry.map(function(x){
                   var cx=Math.round(x/1000); 
                   var cy=(x%1000);
@@ -315,8 +315,8 @@ function generatePolygon(){
  var mrub="16.0,0 ",mrue="32.0,16.0 ",mllb="0,16.0 ",mlle="16.0,32.0 "; 
 
  console.log("generate filled polygon");
- LeftSymetry.sort();
- RightSymetry.sort();
+ LeftSymetry.sort(function(a,b){return a-b;});
+ RightSymetry.sort(function(a,b){return a-b;});
  luCo.push(lub);
  rlCo.push(rlb);
  mluCo.push(mlub);
