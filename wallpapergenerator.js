@@ -76,23 +76,24 @@ initSVG();
 //document.getElementById("codedump").innerHTML=bg;
 
 function getMousePosition(event){
- var mouseposition={x: event.clientX, y: event.clientY};
+ var mouseposition={x: event.offsetX, y: event.offsetY};
  console.log("getMousePosition running");
  console.log("X: "+mouseposition.x+" Y: "+mouseposition.y);
  return mouseposition;
 }
 
 function drawDot(e){
- var correction=160;// just to get the right mousepositon (correction value)
+ //var correction=160; just to get the right mousepositon (correction value)
  var mouseposition=getMousePosition(e);
  var x=mouseposition.x,y=mouseposition.y;
- var yy=y-correction;
+ //var yy=y-correction; obsolete
+ var yy=y;
  var cx='cx='+x+' ';
- var cy='cy='+(y-correction)+' ';
+ var cy='cy='+(y)+' ';
  var bx='cx='+(x+160)+' ';
- var by='cy='+(y-correction+160)+' ';
+ var by='cy='+(y+160)+' ';
  var gx='cx='+(x-160)+' ';
- var gy='cy='+(y-correction+160)+' ';
+ var gy='cy='+(y+160)+' ';
 
  var dot='<circle '+cx+cy+'r="5" stroke="red" fill="red" />';
  var bluedot='<circle '+bx+by+'r="5" stroke="blue" fill="blue" />';
